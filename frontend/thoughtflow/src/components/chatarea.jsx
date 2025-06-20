@@ -7,7 +7,11 @@ import { set } from 'mongoose';
 const VITE_BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
 const socket = io(VITE_BACKEND_URL);
 const Chatarea = () => {
-  const playTing = () => {
+  const playTingS = () => {
+    const audio = new Audio('/audio/pop.mp3');
+    audio.play();
+  };
+  const playTingR = () => {
     const audio = new Audio('/audio/ting.mp3');
     audio.play();
   };
@@ -95,7 +99,7 @@ const Chatarea = () => {
             timestamp: new Date(data.timestamp)
           }
         ]);
-        playTing();
+        playTingR();
       }
     });
 
@@ -138,7 +142,7 @@ const Chatarea = () => {
       receiver: chatWithUserRef.current || 'guest',
       message: inputText
     });
-    playTing();
+    playTingS();
     setInputText('');
 
   };
