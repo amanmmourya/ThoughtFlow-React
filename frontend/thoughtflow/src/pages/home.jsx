@@ -1,12 +1,16 @@
 import React from 'react';
 import { MessageCircle, Users, EyeOff, ArrowRight, Sparkles, Shield, Heart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import Footer from '../components/footer';
+import DevelopmentPopup from '../components/popup';
 
 const Homepage = () => {
     const navigate = useNavigate();
+   
     return (
         <>
+        <DevelopmentPopup/>
         <div className="min-h-screen bg-[#18181b] text-white">
 
             {/* Hero Section */}
