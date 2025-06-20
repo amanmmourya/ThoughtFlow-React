@@ -7,6 +7,10 @@ import { set } from 'mongoose';
 const VITE_BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
 const socket = io(VITE_BACKEND_URL);
 const Chatarea = () => {
+  const playTing = () => {
+    const audio = new Audio('/audio/ting.mp3');
+    audio.play();
+  };
 
   const user = JSON.parse(localStorage.getItem('user'));
   const location = useLocation();
@@ -18,10 +22,10 @@ const Chatarea = () => {
   ]);
   const [recentChats, setRecentChats] = useState([
   ]);
-  
+
   // Mobile sidebar state
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
-  
+
   useEffect(() => {
     chatWithUserRef.current = chatWithUser;
   }, [chatWithUser]);
@@ -91,6 +95,7 @@ const Chatarea = () => {
             timestamp: new Date(data.timestamp)
           }
         ]);
+        playTing();
       }
     });
 
@@ -107,7 +112,7 @@ const Chatarea = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-  
+
   const handleRecentChatClick = (fullName, username) => {
     setChatWith(fullName)
     setChatWithUser(username)
@@ -115,7 +120,7 @@ const Chatarea = () => {
     setIsMobileSidebarOpen(false)
     console.log("from the handler", username, chatWithUser)
   }
-  
+
   const handleSendMessage = async () => {
     if (inputText.trim() === '') return;
 
@@ -133,6 +138,7 @@ const Chatarea = () => {
       receiver: chatWithUserRef.current || 'guest',
       message: inputText
     });
+    playTing();
     setInputText('');
 
   };
@@ -152,7 +158,7 @@ const Chatarea = () => {
     <div className="flex h-screen bg-[#18181b] text-white">
       {/* Mobile Sidebar Overlay */}
       {isMobileSidebarOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
           onClick={() => setIsMobileSidebarOpen(false)}
         />
@@ -236,7 +242,7 @@ const Chatarea = () => {
             >
               <Menu className="w-5 h-5 text-gray-400" />
             </button>
-            
+
             <div className="w-10 h-10 bg-gradient-to-br from-[#bd34fe] to-blue-500 rounded-full flex items-center justify-center">
               <Bot className="w-5 h-5" />
             </div>
